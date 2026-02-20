@@ -11,7 +11,7 @@ services:
       - key: ENVIRONMENT
         value: staging
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.13.5
     healthCheckPath: /health
     domains:
       - ci-cd-demo-staging.onrender.com
@@ -28,7 +28,7 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.13.5
     healthCheckPath: /health
     domains:
       - ci-cd-demo-production.onrender.com
