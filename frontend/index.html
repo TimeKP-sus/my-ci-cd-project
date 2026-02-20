@@ -26,7 +26,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             padding: 40px;
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
         }
 
@@ -137,6 +137,77 @@
             margin: 10px 0;
         }
 
+        /* Button Styles */
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .response-box {
+            background: #f5f5f5;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .response-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .response-content {
+            color: #333;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .success {
+            color: #388e3c;
+        }
+
+        .error {
+            color: #d32f2f;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -149,6 +220,10 @@
             .features {
                 grid-template-columns: 1fr;
             }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -157,79 +232,105 @@
         <h1>🚀 CI/CD Pipeline Project</h1>
         <p class="subtitle">Automated Software Development with GitHub Actions & Render.com</p>
 
+        <!-- Interactive Testing Section -->
+        <div class="pipeline-section" style="background: #e8f5e9; padding: 20px; border-radius: 8px; border-left: 4px solid #4caf50;">
+            <h2 style="color: #2e7d32; border-color: #4caf50;">🧪 Test API Live</h2>
+            <p style="color: #666; margin-bottom: 15px;">Click buttons to test the backend API responses:</p>
+            
+            <div class="button-group">
+                <button class="btn-success" onclick="testHealth()">✓ Check Health</button>
+                <button class="btn-primary" onclick="testVersion()">📊 Get Version</button>
+            </div>
+
+            <div class="response-box" id="responseBox" style="display: none;">
+                <h4>📤 API Response:</h4>
+                <div class="response-content" id="responseContent"></div>
+            </div>
+        </div>
+
         <div class="pipeline-section">
-            <h2>📋 Pipeline Stages</h2>
+            <h2>📋 Complete Pipeline Stages</h2>
             
             <div class="step">
                 <div class="step-number">1</div>
                 <div class="step-content">
-                    <h3>Source - GitHub Version Control</h3>
-                    <p>Developer commits and pushes code to GitHub repository, triggering the pipeline</p>
+                    <h3>Source (GitHub)</h3>
+                    <p>Developer commits & pushes code to GitHub repository</p>
                 </div>
             </div>
 
             <div class="step">
                 <div class="step-number">2</div>
                 <div class="step-content">
-                    <h3>Build - Install & Compile</h3>
-                    <p>Automatically install dependencies from requirements.txt and prepare the application</p>
+                    <h3>Build (GitHub Actions)</h3>
+                    <p>Automatically compile & install all dependencies from requirements.txt</p>
                 </div>
             </div>
 
             <div class="step">
                 <div class="step-number">3</div>
                 <div class="step-content">
-                    <h3>Test - Automated Testing</h3>
-                    <p>Run pytest to execute unit tests with coverage analysis</p>
+                    <h3>Test (pytest)</h3>
+                    <p>Execute 18 automated unit tests with code coverage analysis</p>
                 </div>
             </div>
 
             <div class="step">
                 <div class="step-number">4</div>
                 <div class="step-content">
-                    <h3>Deploy - Render.com Deployment</h3>
-                    <p>Automatically deploy to Staging or require manual approval for Production</p>
+                    <h3>Deploy (Render.com)</h3>
+                    <p>Auto-deploy to Staging or require manual approval for Production</p>
                 </div>
             </div>
         </div>
 
         <div class="pipeline-section">
-            <h2>🌍 Deployment Environments</h2>
+            <h2>🌍 Two Deployment Environments</h2>
             
             <div class="environment">
-                <h4>Staging Environment</h4>
-                <div class="env-item">✓ Automatic deployment on every push</div>
-                <div class="env-item">✓ Used for testing and validation</div>
-                <div class="env-item">✓ Deployed to: staging.onrender.com</div>
+                <h4>✓ Staging (Development)</h4>
+                <div class="env-item">• <strong>Auto-deploy</strong> on every push to main branch</div>
+                <div class="env-item">• <strong>Free tier</strong> on Render.com</div>
+                <div class="env-item">• Used for testing & validation</div>
+                <div class="env-item">📍 URL: ci-cd-demo-staging.onrender.com</div>
             </div>
 
             <div class="environment">
-                <h4>Production Environment</h4>
-                <div class="env-item">⚠ Requires manual approval in GitHub Actions</div>
-                <div class="env-item">✓ Used for live users and real data</div>
-                <div class="env-item">✓ Deployed to: production.onrender.com</div>
+                <h4>⚠️ Production (Live)</h4>
+                <div class="env-item">• <strong>Manual approval required</strong> before deployment</div>
+                <div class="env-item">• <strong>Starter plan</strong> on Render.com (~$7/month)</div>
+                <div class="env-item">• Serves real users & production data</div>
+                <div class="env-item">📍 URL: ci-cd-demo-production.onrender.com</div>
             </div>
         </div>
 
         <div class="pipeline-section">
-            <h2>✨ Key Features</h2>
+            <h2>✨ Key Features Implemented</h2>
             
             <div class="features">
                 <div class="feature-box">
-                    <h4>🔄 Automated Pipeline</h4>
-                    <p>CI/CD workflow triggered automatically on GitHub push events</p>
+                    <h4>🔄 Full Automation</h4>
+                    <p>CI/CD triggered automatically on every GitHub push</p>
                 </div>
                 <div class="feature-box">
-                    <h4>🧪 Comprehensive Testing</h4>
-                    <p>Unit tests with pytest and coverage reporting</p>
+                    <h4>🧪 18 Unit Tests</h4>
+                    <p>Comprehensive pytest coverage with automated reporting</p>
                 </div>
                 <div class="feature-box">
-                    <h4>🛡️ Manual Approval</h4>
-                    <p>Production deployments require explicit approval</p>
+                    <h4>🛡️ Manual Approval Gate</h4>
+                    <p>Production requires human review before deployment</p>
                 </div>
                 <div class="feature-box">
-                    <h4>📊 Health Checks</h4>
-                    <p>Endpoints for monitoring application status</p>
+                    <h4>📊 Health Monitoring</h4>
+                    <p>API endpoints for status & version checking</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🚀 Multi-Stage Deploy</h4>
+                    <p>Staging & Production environments separated</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📝 Full Documentation</h4>
+                    <p>Complete setup & deployment guides included</p>
                 </div>
             </div>
         </div>
@@ -239,22 +340,77 @@
             
             <div class="features">
                 <div class="feature-box">
-                    <h4>Runtime</h4>
-                    <p>Python 3.11<br>Flask 2.3.3<br>Gunicorn</p>
+                    <h4>Backend</h4>
+                    <p><strong>Python 3.13.5</strong><br>Flask 3.0.0<br>Gunicorn 21.2.0</p>
                 </div>
                 <div class="feature-box">
-                    <h4>CI/CD Tools</h4>
-                    <p>GitHub Actions<br>Render.com<br>pytest</p>
+                    <h4>Testing</h4>
+                    <p><strong>pytest 7.4.3</strong><br>pytest-cov 4.1.0<br>18 test cases</p>
+                </div>
+                <div class="feature-box">
+                    <h4>CI/CD Pipeline</h4>
+                    <p><strong>GitHub Actions</strong><br>Automated workflows<br>Build + Test + Deploy</p>
+                </div>
+                <div class="feature-box">
+                    <h4>Cloud Deployment</h4>
+                    <p><strong>Render.com</strong><br>Staging (Free)<br>Production (Starter)</p>
                 </div>
             </div>
         </div>
 
+        <div class="pipeline-section">
+            <h2>📋 API Endpoints</h2>
+            <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                <p style="margin: 10px 0;"><strong>GET /</strong> - Main dashboard page</p>
+                <p style="margin: 10px 0;"><strong>GET /health</strong> - Health check endpoint</p>
+                <p style="margin: 10px 0;"><strong>GET /api/version</strong> - Version information API</p>
+            </div>
+        </div>
+
         <div style="text-align: center; margin-top: 30px;">
-            <div class="status-badge">✓ Pipeline Active</div>
+            <div class="status-badge">✅ Pipeline Complete & Active</div>
             <p style="color: #999; margin-top: 15px; font-size: 0.9em;">
-                This application demonstrates a complete DevOps CI/CD pipeline
+                GitHub: github.com/TimeKP-sus/my-ci-cd-project
+            </p>
+            <p style="color: #999; font-size: 0.9em;">
+                Complete CI/CD implementation meeting all Topic 7 requirements
             </p>
         </div>
     </div>
+
+    <!-- JavaScript for API Testing -->
+    <script>
+        function showResponse(message, isError = false) {
+            const box = document.getElementById('responseBox');
+            const content = document.getElementById('responseContent');
+            box.style.display = 'block';
+            content.className = isError ? 'response-content error' : 'response-content success';
+            content.textContent = message;
+        }
+
+        async function testHealth() {
+            showResponse('Loading...', false);
+            try {
+                const response = await fetch('/health');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                showResponse(JSON.stringify(data, null, 2), false);
+            } catch (error) {
+                showResponse(`❌ Error: ${error.message}\n\nMake sure the backend is running on this server.`, true);
+            }
+        }
+
+        async function testVersion() {
+            showResponse('Loading...', false);
+            try {
+                const response = await fetch('/api/version');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                showResponse(JSON.stringify(data, null, 2), false);
+            } catch (error) {
+                showResponse(`❌ Error: ${error.message}\n\nMake sure the backend is running on this server.`, true);
+            }
+        }
+    </script>
 </body>
 </html>
