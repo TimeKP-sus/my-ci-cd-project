@@ -1,0 +1,126 @@
+name: CD - Deploy to Render.com
+
+on:
+  push:
+    branches: [ main ]
+  workflow_run:
+    workflows: ["CI - Build and Test"]
+    types:
+      - completed
+    branches: [ main ]
+
+jobs:
+  # Job 1: Deploy to Staging with automatic approval
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Deploy to Staging
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          STAGING_SERVICE_ID: ${{ secrets.STAGING_SERVICE_ID }}
+        run: |
+          echo "🚀 Deploying to Staging environment..."
+          
+          # Deploy using Render API
+          curl -X POST https://api.render.com/v1/services/${{ secrets.STAGING_SERVICE_ID }}/deploys \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{}'
+          
+          echo "✅ Staging deployment triggered"
+      
+      - name: Staging Deployment Status
+        if: always()
+        run: |
+          echo "📍 Environment: Staging"
+          echo "🔄 Status: Deployment in progress"
+          echo "🌐 URL: https://ci-cd-demo-staging.onrender.com"
+          echo "⏱️ Deployment may take 2-5 minutes to complete"
+
+  # Job 2: Manual approval before Production deployment
+  approve-production:
+    name: Request Production Approval
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Production Deployment Notification
+        run: |
+          echo "⏸️  PRODUCTION DEPLOYMENT AWAITING APPROVAL"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo ""
+          echo "📋 Build Information:"
+          echo "   Branch: ${{ github.ref_name }}"
+          echo "   Commit: ${{ github.sha }}"
+          echo "   Author: ${{ github.actor }}"
+          echo "   Timestamp: $(date)"
+          echo ""
+          echo "✅ Staging deployment completed successfully"
+          echo ""
+          echo "⚠️  ACTION REQUIRED:"
+          echo "   Go to: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "   Click 'Review deployments' to approve Production deployment"
+          echo ""
+
+  # Job 3: Deploy to Production (requires manual approval)
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: approve-production
+    if: github.ref == 'refs/heads/main'
+    
+    environment:
+      name: production
+      url: https://ci-cd-demo-production.onrender.com
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Wait for approval
+        run: |
+          echo "⏳ Waiting for manual approval from repository maintainers..."
+          echo "This deployment requires human review before proceeding."
+      
+      - name: Deploy to Production
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          PRODUCTION_SERVICE_ID: ${{ secrets.PRODUCTION_SERVICE_ID }}
+        run: |
+          echo "🚀 Deploying to Production environment..."
+          echo "⚠️  This is a LIVE deployment - changes will affect real users"
+          
+          # Deploy using Render API
+          curl -X POST https://api.render.com/v1/services/${{ secrets.PRODUCTION_SERVICE_ID }}/deploys \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{}'
+          
+          echo "✅ Production deployment triggered"
+      
+      - name: Production Deployment Status
+        if: always()
+        run: |
+          echo "📍 Environment: Production"
+          echo "🔄 Status: Deployment in progress"
+          echo "🌐 URL: https://ci-cd-demo-production.onrender.com"
+          echo "⏱️ Deployment may take 2-5 minutes to complete"
+      
+      - name: Send Notification
+        if: success()
+        run: |
+          echo "✅ PRODUCTION DEPLOYMENT SUCCESSFUL"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📍 Live URL: https://ci-cd-demo-production.onrender.com"
+          echo "👤 Deployed by: ${{ github.actor }}"
+          echo "🔗 Commit: ${{ github.sha }}"

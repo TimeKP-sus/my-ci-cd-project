@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Pipeline Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .pipeline-section {
+            margin: 30px 0;
+        }
+
+        .pipeline-section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .step {
+            display: flex;
+            margin: 15px 0;
+            align-items: center;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .environment {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .environment h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .env-item {
+            color: #666;
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .feature-box h4 {
+            color: #764ba2;
+            margin-bottom: 8px;
+        }
+
+        .feature-box p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 CI/CD Pipeline Project</h1>
+        <p class="subtitle">Automated Software Development with GitHub Actions & Render.com</p>
+
+        <div class="pipeline-section">
+            <h2>📋 Pipeline Stages</h2>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Source - GitHub Version Control</h3>
+                    <p>Developer commits and pushes code to GitHub repository, triggering the pipeline</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Build - Install & Compile</h3>
+                    <p>Automatically install dependencies from requirements.txt and prepare the application</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Test - Automated Testing</h3>
+                    <p>Run pytest to execute unit tests with coverage analysis</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Deploy - Render.com Deployment</h3>
+                    <p>Automatically deploy to Staging or require manual approval for Production</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pipeline-section">
+            <h2>🌍 Deployment Environments</h2>
+            
+            <div class="environment">
+                <h4>Staging Environment</h4>
+                <div class="env-item">✓ Automatic deployment on every push</div>
+                <div class="env-item">✓ Used for testing and validation</div>
+                <div class="env-item">✓ Deployed to: staging.onrender.com</div>
+            </div>
+
+            <div class="environment">
+                <h4>Production Environment</h4>
+                <div class="env-item">⚠ Requires manual approval in GitHub Actions</div>
+                <div class="env-item">✓ Used for live users and real data</div>
+                <div class="env-item">✓ Deployed to: production.onrender.com</div>
+            </div>
+        </div>
+
+        <div class="pipeline-section">
+            <h2>✨ Key Features</h2>
+            
+            <div class="features">
+                <div class="feature-box">
+                    <h4>🔄 Automated Pipeline</h4>
+                    <p>CI/CD workflow triggered automatically on GitHub push events</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🧪 Comprehensive Testing</h4>
+                    <p>Unit tests with pytest and coverage reporting</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🛡️ Manual Approval</h4>
+                    <p>Production deployments require explicit approval</p>
+                </div>
+                <div class="feature-box">
+                    <h4>📊 Health Checks</h4>
+                    <p>Endpoints for monitoring application status</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pipeline-section">
+            <h2>🔧 Technology Stack</h2>
+            
+            <div class="features">
+                <div class="feature-box">
+                    <h4>Runtime</h4>
+                    <p>Python 3.11<br>Flask 2.3.3<br>Gunicorn</p>
+                </div>
+                <div class="feature-box">
+                    <h4>CI/CD Tools</h4>
+                    <p>GitHub Actions<br>Render.com<br>pytest</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <div class="status-badge">✓ Pipeline Active</div>
+            <p style="color: #999; margin-top: 15px; font-size: 0.9em;">
+                This application demonstrates a complete DevOps CI/CD pipeline
+            </p>
+        </div>
+    </div>
+</body>
+</html>
