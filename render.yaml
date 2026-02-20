@@ -5,8 +5,8 @@ services:
     env: python
     plan: free
     branch: main
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT -C gunicorn_config.py backend.app:app
+    buildCommand: pip install -r ./backend/requirements.txt
+    startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
     envVars:
       - key: ENVIRONMENT
         value: staging
@@ -22,7 +22,7 @@ services:
     env: python
     plan: starter
     branch: main
-    buildCommand: pip install -r backend/requirements.txt
+    buildCommand: pip install -r ./backend/requirements.txt
     startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
     envVars:
       - key: ENVIRONMENT
