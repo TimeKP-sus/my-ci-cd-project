@@ -1,51 +1,21 @@
-from flask import Flask, jsonify, render_template_string
+from flask import Flask, jsonify, send_file
 import os
+import sys
 
-app = Flask(__name__)
+# Add parent directory to path to serve frontend
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+app = Flask(__name__, static_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'frontend'), static_url_path='')
 
 @app.route('/')
 def index():
-    """Root endpoint - Returns simple HTML page"""
-    html = """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>CI/CD Pipeline Demo</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                max-width: 800px;
-                margin: 50px auto;
-                padding: 20px;
-            }
-            .container {
-                background: #f4f4f4;
-                border-radius: 8px;
-                padding: 30px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            h1 { color: #333; }
-            .status { color: #27ae60; font-weight: bold; }
-            .env { background: #ecf0f1; padding: 10px; border-radius: 4px; margin: 10px 0; }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>🚀 CI/CD Pipeline Demo</h1>
-            <p>This application is deployed via GitHub Actions to Render.com</p>
-            <div class="status">✓ Application is running successfully</div>
-            <div class="env">
-                <strong>Environment:</strong> """ + os.getenv('ENVIRONMENT', 'development') + """
-            </div>
-            <div class="env">
-                <strong>Version:</strong> 1.0.0
-            </div>
-            <p><small>Last updated: """ + str(__import__('datetime').datetime.now()) + """</small></p>
-        </div>
-    </body>
-    </html>
-    """
-    return render_template_string(html)
+    """Root endpoint - Returns frontend dashboard"""
+    frontend_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'frontend', 'index.html')
+    try:
+        with open(frontend_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        return "<h1>Frontend not found. Running from backend...</h1>", 404
 
 @app.route('/health')
 def health():
