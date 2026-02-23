@@ -476,7 +476,7 @@
                 const response = await fetch('/hieucube');
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
-                showResponse(`Kết quả: ${data.chim}, ${data.ket_qua_danh_gia}`, false);
+                showResponse(`Kết quả: ${data.chim}, ${data.ketquadanhgia}`, false);
             } catch (error) {
                 showResponse(`❌ Lỗi: ${error.message}\\n\\nĐảm bảo backend đang chạy trên máy chủ này.`, true);
             }

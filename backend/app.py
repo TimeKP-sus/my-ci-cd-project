@@ -30,8 +30,8 @@ def index():
 def hieucube():
     return jsonify(
         {
-            'chim:': '3,6cm',
-            'ket qua danh gia': 'chim be vl'
+            'chim': '3,6cm',
+            'ketquadanhgia': 'chim be vl'
         }
     ), 200
 
