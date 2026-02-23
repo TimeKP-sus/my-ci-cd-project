@@ -249,6 +249,7 @@
                 <button class="btn-success" onclick="testHealth()">✓ Kiểm Tra Sức Khoẻ</button>
                 <!-- Nút "Lấy Phiên Bản" -->
                 <button class="btn-primary" onclick="testVersion()">📊 Lấy Phiên Bản</button>
+                <button class="btn-primary" onclick="hieucube()">HieuCube</button>
             </div>
 
             <!-- Hộp hiển thị phản hồi API -->
@@ -469,6 +470,17 @@
                 // Hiển thị thông báo lỗi chi tiết khi có vấn đề
                 showResponse(`❌ Lỗi: ${error.message}\\n\\nĐảm bảo backend đang chạy trên máy chủ này.`, true);
             }
+        }
+        async function hieucube() {
+            try {
+                const response = await fetch('/hieucube');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                showResponse(`Kết quả: ${data.chim}, ${data.ket_qua_danh_gia}`, false);
+            } catch (error) {
+                showResponse(`❌ Lỗi: ${error.message}\\n\\nĐảm bảo backend đang chạy trên máy chủ này.`, true);
+            }
+            
         }
     </script>
 </body>

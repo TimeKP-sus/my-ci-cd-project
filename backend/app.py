@@ -26,6 +26,14 @@ def index():
     except FileNotFoundError:
         # Nếu file không tìm thấy, trả về lỗi 404
         return "<h1>Frontend không tìm thấy. Đang chạy từ backend...</h1>", 404
+@app.route('/hieucube')
+def hieucube():
+    return jsonify(
+        {
+            'chim:': '3,6cm',
+            'ket qua danh gia': 'chim be vl'
+        }
+    ), 200
 
 @app.route('/health')
 def health():
