@@ -1,5 +1,18 @@
+# ============================================================================
+# Danh Sách Các Gói Python Cần Thiết - Python Package Dependencies
+# ============================================================================
+
+# Framework web - Web Framework for building API and serving frontend
 Flask==3.0.0
+
+# Công cụ web WSGI - WSGI utilities and data structures
 Werkzeug==3.0.1
+
+# Framework kiểm tra - Testing framework for running automated tests
 pytest==7.4.3
+
+# Plugin phạm vi cho pytest - Code coverage plugin for pytest
 pytest-cov==4.1.0
+
+# Máy chủ ứng dụng web - WSGI HTTP Server for production deployment
 gunicorn==21.2.0

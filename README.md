@@ -1,89 +1,106 @@
-# CI/CD Pipeline Project - Topic 7
+# Dự Án CI/CD Pipeline - Chủ Đề 7 (Project Topic 7)
 
+Một cuộc biểu diễn quy trình **Tích Hợp Liên Tục / Triển Khai Liên Tục (CI/CD)** hoàn chỉnh sử dụng GitHub Actions và Render.com.
 A complete **Continuous Integration / Continuous Deployment (CI/CD)** pipeline demonstration using GitHub Actions and Render.com.
 
-## 📋 Project Overview
+## 📋 Tổng Quan Dự Án (Project Overview)
 
+Dự án này triển khai một quy trình DevOps đầy đủ tự động hóa vòng đời phát triển phần mềm:
 This project implements a full DevOps pipeline that automates the software development lifecycle:
-- **Source Control**: GitHub (version control)
-- **Build**: Install dependencies and prepare application
-- **Test**: Run automated tests with pytest
-- **Deploy**: Automatic staging, manual approval for production
+- **Kiểm Soát Phiên Bản**: GitHub (version control) / **Source Control**: GitHub (version control)
+- **Xây Dựng**: Cài đặt các phụ thuộc và chuẩn bị ứng dụng / **Build**: Install dependencies and prepare application
+- **Kiểm Tra**: Chạy kiểm tra tự động với pytest / **Test**: Run automated tests with pytest
+- **Triển Khai**: Triển khai staging tự động, yêu cầu phê duyệt cho production / **Deploy**: Automatic staging, manual approval for production
 
-## 🎯 Requirements Met
+## 🎯 Yêu Cầu Đáp Ứng (Requirements Met)
 
-✅ **Source Control**: GitHub repository  
-✅ **Build Step**: Install Python dependencies  
-✅ **Test Step**: Automated pytest testing with coverage  
-✅ **Deploy Step**: Render.com deployment  
-✅ **2 Environments**: Staging (automatic) & Production (with approval)  
-✅ **Manual Approval**: Required for Production deployment  
+✅ **Kiểm Soát Phiên Bản**: Kho GitHub / **Source Control**: GitHub repository  
+✅ **Bước Xây Dựng**: Cài đặt các phụ thuộc Python / **Build Step**: Install Python dependencies  
+✅ **Bước Kiểm Tra**: Kiểm tra pytest tự động với phạm vi / **Test Step**: Automated pytest testing with coverage  
+✅ **Bước Triển Khai**: Triển khai Render.com / **Deploy Step**: Render.com deployment  
+✅ **2 Môi Trường**: Staging (tự động) & Production (có phê duyệt) / **2 Environments**: Staging (automatic) & Production (with approval)  
+✅ **Phê Duyệt Thủ Công**: Yêu cầu cho triển khai Production / **Manual Approval**: Required for Production deployment  
 
-## 📁 Project Structure
+## 📁 Cấu Trúc Dự Án (Project Structure)
 
 ```
 my-ci-cd-project/
-├── backend/
-│   ├── app.py              # Flask application
-│   ├── requirements.txt    # Python dependencies
+├── backend/                          # Thư mục Backend - Flask Application
+│   ├── app.py                        # Ứng dụng Flask / Flask application
+│   ├── requirements.txt              # Các phụ thuộc Python / Python dependencies
 │   ├── tests/
-│   │   └── test_app.py    # Unit tests (18 tests)
-│   └── README.md          # Backend documentation
-├── frontend/
-│   └── index.html         # Landing page with pipeline info
-├── .github/
+│   │   └── test_app.py              # Bài kiểm tra đơn vị (18 test) / Unit tests (18 tests)
+│   └── README.md                     # Tài liệu Backend / Backend documentation
+├── frontend/                         # Thư mục Frontend - Giao diện Người Dùng
+│   └── index.html                   # Trang hạ cánh với thông tin pipeline / Landing page with pipeline info
+├── .github/                          # Cấu hình GitHub Actions
 │   └── workflows/
-│       ├── ci.yml         # CI Pipeline (Build + Test)
-│       └── cd.yml         # CD Pipeline (Deploy + Approval)
-├── render.yaml            # Render.com deployment config
-├── .gitignore             # Git ignore patterns
-└── README.md              # This file
+│       ├── ci.yml                   # CI Pipeline (Xây Dựng + Kiểm Tra) / CI Pipeline (Build + Test)
+│       └── cd.yml                   # CD Pipeline (Triển Khai + Phê Duyệt) / CD Pipeline (Deploy + Approval)
+├── render.yaml                       # Cấu hình triển khai Render.com / Render.com deployment config
+├── gunicorn_config.py                # Cấu hình máy chủ Gunicorn / Gunicorn configuration
+├── .gitignore                        # Các tệp cần bỏ qua Git / Git ignore patterns
+└── README.md                         # Tệp này / This file
 ```
 
-## 🚀 Pipeline Flow
+## 🚀 Luồng Pipeline (Pipeline Flow)
 
 ```
-Developer Push to GitHub
+Push của Lập Trình Viên đến GitHub / Developer Push to GitHub
          │
          ▼
     ┌─────────────────────────┐
-    │   CI Pipeline (ci.yml)  │
+    │  Pipeline CI (ci.yml)   │
+    │ CI Pipeline (ci.yml)    │
     │  ✓ Checkout code        │
-    │  ✓ Setup Python         │
+    │  ✓ Thiết lập Python     │
+    │  ✓ Cài đặt dep          │
+    │  ✓ Chạy kiểm tra        │
+    │  ✓ Sinh phạm vi         │
+    │  Setup Python           │
     │  ✓ Install deps         │
     │  ✓ Run tests (pytest)   │
     │  ✓ Generate coverage    │
     └─────────────────────────┘
          │
-         ├─ Success ──┐
-         │            ▼
-         │      ┌──────────────────────┐
-         │      │ Deploy to STAGING    │
-         │      │ (Auto - No approval) │
-         │      └──────────────────────┘
-         │            │
-         │            ▼
-         │      ┌──────────────────────────────┐
-         │      │ Request PROD Approval 🔔     │
-         │      │ (Wait for manual review)     │
-         │      └──────────────────────────────┘
-         │            │
-         │      ┌─ Approved?
-         │      │    │
-         │      │    ├─ YES ──┐
-         │      │    │        ▼
-         │      │    │  ┌──────────────────────┐
-         │      │    │  │ Deploy to PROD       │
-         │      │    │  | (Manual approval ✓)  │
-         │      │    │  └──────────────────────┘
-         │      │    │
-         │      │    └─ NO ──┐
-         │      │             ▼
-         │      │        (Stop - Not deployed)
+         ├─ Thành Công / Success ──┐
+         │                          ▼
+         │              ┌──────────────────────┐
+         │              │ Triển Khai đến STAGING │
+         │              │ Deploy to STAGING      │
+         │              │ (Tự động - Không cần   │
+         │              │ phê duyệt)             │
+         │              │ (Auto - No approval)   │
+         │              └──────────────────────┘
+         │                        │
+         │                        ▼
+         │              ┌──────────────────────────────┐
+         │              │ Yêu Cầu Phê Duyệt PROD 🔔    │
+         │              │ Request PROD Approval        │
+         │              │ (Chờ xem xét Thủ Công)       │
+         │              │ (Wait for manual review)     │
+         │              └──────────────────────────────┘
+         │                        │
+         │                  ┌─ Phê Duyệt?
+         │                  │ Approved?
+         │                  │
+         │                  ├─ CÓ/YES ──┐
+         │                  │           ▼
+         │                  │  ┌──────────────────────┐
+         │                  │  │ Triển Khai đến PROD  │
+         │                  │  │ Deploy to PROD       │
+         │                  │  │ (Phê duyệt Thủ Công) │
+         │                  │  │ (Manual approval ✓)  │
+         │                  │  └──────────────────────┘
+         │                  │
+         │                  └─ KHÔNG/NO ──┐
+         │                                 ▼
+         │                            (Dừng - Không triển khai)
+         │                            (Stop - Not deployed)
          │
-         └─ Failure ──┐
-                      ▼
-                 (Build failed - No deployment)
+         └─ Lỗi / Failure ──┐
+                            ▼
+                   (Build failed - No deployment)
 ```
 
 ## 🔧 Technology Stack
@@ -138,21 +155,21 @@ The project includes **18 comprehensive unit tests** covering:
 
 ```bash
 cd backend
+Môi Trường Triển Khai (Deployment Environments)
 
-# Run all tests
-pytest
+### Môi Trường Staging (Staging Environment)
+- **Kích Hoạt**: Tự động trên mỗi push đến `main` / **Trigger**: Automatic on every push to `main`
+- **Phê Duyệt**: Không yêu cầu / **Approval**: None required
+- **URL**: `https://ci-cd-demo-staging.onrender.com`
+- **Mục Đích**: Kiểm tra và xác nhận trước production / **Purpose**: Testing and validation before production
+- **Gói Render**: Tầng miễn phí / **Render Plan**: Free tier
 
-# Run with verbose output
-pytest -v
-
-# Run with coverage report
-pytest --cov=app tests/
-
-# Run specific test file
-pytest tests/test_app.py -v
-```
-
-## 🌍 Deployment Environments
+### Môi Trường Production (Production Environment)
+- **Kích Hoạt**: Sau khi triển khai staging thành công / **Trigger**: After staging deployment succeeds
+- **Phê Duyệt**: ⚠️ **YÊU CẦU PHÊDUYỆT THỦ CÔNG** trong UI GitHub Actions / **Approval**: ⚠️ **MANUAL APPROVAL REQUIRED** in GitHub Actions UI
+- **URL**: `https://ci-cd-demo-production.onrender.com`
+- **Mục Đích**: Ứng dụng trực tiếp phục vụ người dùng thực / **Purpose**: Live application serving real users
+- **Gói Render**: Gói Starter (có trả phí) /# 🌍 Deployment Environments
 
 ### Staging Environment
 - **Trigger**: Automatic on every push to `main`
@@ -260,31 +277,31 @@ Response:
 - [Flask Documentation](https://flask.palletsprojects.com/)
 - [pytest Documentation](https://docs.pytest.org/)
 
-## 🎓 Learning Objectives
+## 🎓 Mục Tiêu Học Tập (Learning Objectives)
 
-This project demonstrates:
-1. **CI/CD Concepts** - Automation of build, test, deploy
-2. **GitHub Actions** - Workflow automation
-3. **Render.com** - Cloud deployment platform
-4. **Testing** - Unit tests with pytest
-5. **DevOps Best Practices** - Environment separation, manual approvals
-6. **API Development** - Building REST endpoints
-7. **Version Control** - Using Git/GitHub effectively
+Dự án này thể hiện / This project demonstrates:
+1. **Khái Niệm CI/CD** - Tự động hóa xây dựng, kiểm tra, triển khai / **CI/CD Concepts** - Automation of build, test, deploy
+2. **GitHub Actions** - Tự động hóa quy trình công việc / **GitHub Actions** - Workflow automation
+3. **Render.com** - Nền tảng triển khai đám mây / **Render.com** - Cloud deployment platform
+4. **Kiểm Tra** - Bài kiểm tra đơn vị với pytest / **Testing** - Unit tests with pytest
+5. **Thực Tiễn DevOps Tốt Nhất** - Tách biệt môi trường, phê duyệt thủ công / **DevOps Best Practices** - Environment separation, manual approvals
+6. **Phát Triển API** - Xây dựng điểm cuối REST / **API Development** - Building REST endpoints
+7. **Kiểm Soát Phiên Bản** - Sử dụng Git/GitHub hiệu quả / **Version Control** - Using Git/GitHub effectively
 
-## ✅ How to Use This Project
+## ✅ Cách Sử Dụng Dự Án Này (How to Use This Project)
 
-### For Learning
-1. Fork this repository
-2. Clone to your machine
-3. Read the code and understand each component
-4. Run locally to see how it works
-5. Deploy to Render.com and trigger the pipeline
+### Để Học Tập (For Learning)
+1. Fork kho này / Fork this repository
+2. Clone đến máy của bạn / Clone to your machine
+3. Đọc code và hiểu từng thành phần / Read the code and understand each component
+4. Chạy cục bộ để xem nó hoạt động như thế nào / Run locally to see how it works
+5. Triển khai đến Render.com và kích hoạt quy trình / Deploy to Render.com and trigger the pipeline
 
-### For Your Assignment
-1. Customize the app (change app name, add features)
-2. Add your own tests
-3. Deploy to your Render.com account
-4. Show the working pipeline to your instructor
+### Cho Bài Tập Của Bạn (For Your Assignment)
+1. Tùy chỉnh ứng dụng (thay đổi tên ứng dụng, thêm tính năng) / Customize the app (change app name, add features)
+2. Thêm kiểm tra của riêng bạn / Add your own tests
+3. Triển khai đến tài khoản Render.com của bạn / Deploy to your Render.com account
+4. Hiển thị quy trình hoạt động cho người hướng dẫn / Show the working pipeline to your instructor
 
 ## 📄 License
 

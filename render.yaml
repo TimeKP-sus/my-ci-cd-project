@@ -1,34 +1,51 @@
+# ============================================================================
+# Cấu Hình Triển Khai Render.com - Render.com Deployment Configuration
+# Tệp này xác định cách Render.com triển khai ứng dụng lên cả Staging và Production
+# ============================================================================
+
 services:
-  # Staging Environment
-  - type: web
-    name: ci-cd-demo-staging
-    env: python
-    plan: free
-    branch: main
-    buildCommand: pip install -r ./backend/requirements.txt
-    startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
+  # ============================================================================
+  # Môi Trường Staging - Free Tier (Tự động triển khai trên mỗi push)
+  # Staging Environment - Free Tier (Auto-deploys on every push)
+  # ============================================================================
+  - type: web  # Loại dịch vụ: ứng dụng web
+    name: ci-cd-demo-staging  # Tên dịch vụ trong Render.com
+    env: python  # Môi trường runtime: Python
+    plan: free  # Gói miễn phí
+    branch: main  # Nhánh GitHub để triển khai
+    buildCommand: pip install -r ./backend/requirements.txt  # Lệnh cài đặt các gói cần thiết
+    startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app  # Lệnh khởi động ứng dụng
     envVars:
+      # Biến môi trường: xác định đây là staging
       - key: ENVIRONMENT
         value: staging
+      # Phiên bản Python được sử dụng
       - key: PYTHON_VERSION
         value: 3.13.5
-    healthCheckPath: /health
+    healthCheckPath: /health  # Đường dẫn endpoint để kiểm tra sức khỏe
     domains:
+      # Tên miền công khai
       - ci-cd-demo-staging.onrender.com
 
-  # Production Environment
-  - type: web
-    name: ci-cd-demo-production
-    env: python
-    plan: starter
-    branch: main
-    buildCommand: pip install -r ./backend/requirements.txt
-    startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app
+  # ============================================================================
+  # Môi Trường Production - Starter Tier (Yêu cầu phê duyệt thủ công)
+  # Production Environment - Starter Tier (Manual approval required)
+  # ============================================================================
+  - type: web  # Loại dịch vụ: ứng dụng web
+    name: ci-cd-demo-production  # Tên dịch vụ trong Render.com
+    env: python  # Môi trường runtime: Python
+    plan: starter  # Gói Starter trả phí (~$7/tháng)
+    branch: main  # Nhánh GitHub để triển khai
+    buildCommand: pip install -r ./backend/requirements.txt  # Lệnh cài đặt các gói cần thiết
+    startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT backend.app:app  # Lệnh khởi động ứng dụng
     envVars:
+      # Biến môi trường: xác định đây là production
       - key: ENVIRONMENT
         value: production
+      # Phiên bản Python được sử dụng
       - key: PYTHON_VERSION
         value: 3.13.5
-    healthCheckPath: /health
+    healthCheckPath: /health  # Đường dẫn endpoint để kiểm tra sức khỏe
     domains:
+      # Tên miền công khai
       - ci-cd-demo-production.onrender.com

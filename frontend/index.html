@@ -1,49 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- Ứng dụng Dashboard CI/CD - Project Dashboard Application -->
+<html lang="vi"><!-- Ngôn ngữ: Tiếng Việt -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CI/CD Pipeline Project</title>
+    <meta charset="UTF-8"><!-- Bộ mã: UTF-8 hỗ trợ tiếng Việt -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Tối ưu mobile responsive -->
+    <title>Dự Án CI/CD Pipeline</title><!-- Tiêu đề trang web -->
     <style>
+        /* Reset tất cả các phần tử - Xoá khoảng cách mặc định */
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0;  /* Xoá khoảng cách ngoài */
+            padding: 0;  /* Xoá khoảng cách trong */
+            box-sizing: border-box;  /* Tính toán kích thước bao gồm đường viền */
         }
 
+        /* Kiểu cho cơ thể trang - Body Styles */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Chọn font chữ */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  /* Nền gradient đẹp */
+            min-height: 100vh;  /* Chiều cao tối thiểu 100% */
+            display: flex;  /* Sử dụng Flexbox layout */
+            justify-content: center;  /* Căn giữa ngang */
+            align-items: center;  /* Căn giữa dọc */
+            padding: 20px;  /* Khoảng cách ngoài */
         }
 
+        /* Hộp chứa chính - Main Container */
         .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            padding: 40px;
-            max-width: 900px;
-            width: 100%;
+            background: white;  /* Nền trắng */
+            border-radius: 12px;  /* Góc bo tròn */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);  /* Bóng đổ */
+            padding: 40px;  /* Khoảng cách trong */
+            max-width: 900px;  /* Chiều rộng tối đa */
+            width: 100%;  /* Chiều rộng 100% */
         }
 
+        /* Tiêu đề chính - Main Heading */
         h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.5em;
+            color: #333;  /* Màu chữ xám đậm */
+            margin-bottom: 10px;  /* Khoảng cách dưới */
+            font-size: 2.5em;  /* Kích thước font lớn */
         }
 
+        /* Tiêu đề phụ - Subtitle */
         .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1em;
+            color: #666;  /* Màu chữ xám nhạt */
+            margin-bottom: 30px;  /* Khoảng cách dưới */
+            font-size: 1.1em;  /* Kích thước font vừa */
         }
 
+        /* Phần Pipeline - Pipeline Section */
         .pipeline-section {
-            margin: 30px 0;
+            margin: 30px 0;  /* Khoảng cách trên/dưới */
         }
 
         .pipeline-section h2 {
@@ -232,183 +239,235 @@
         <h1>🚀 CI/CD Pipeline Project</h1>
         <p class="subtitle">Automated Software Development with GitHub Actions & Render.com</p>
 
-        <!-- Interactive Testing Section -->
+        <!-- Phần Kiểm Tra API Trực Tiếp Interactive Testing Section -->
         <div class="pipeline-section" style="background: #e8f5e9; padding: 20px; border-radius: 8px; border-left: 4px solid #4caf50;">
-            <h2 style="color: #2e7d32; border-color: #4caf50;">🧪 Test API Live</h2>
-            <p style="color: #666; margin-bottom: 15px;">Click buttons to test the backend API responses:</p>
+            <h2 style="color: #2e7d32; border-color: #4caf50;">🧪 Kiểm Tra API Trực Tiếp</h2>
+            <p style="color: #666; margin-bottom: 15px;">Nhấp các nút để kiểm tra phản hồi API Backend:</p>
             
             <div class="button-group">
-                <button class="btn-success" onclick="testHealth()">✓ Check Health</button>
-                <button class="btn-primary" onclick="testVersion()">📊 Get Version</button>
+                <!-- Nút "Kiểm Tra Sức Khoẻ" -->
+                <button class="btn-success" onclick="testHealth()">✓ Kiểm Tra Sức Khoẻ</button>
+                <!-- Nút "Lấy Phiên Bản" -->
+                <button class="btn-primary" onclick="testVersion()">📊 Lấy Phiên Bản</button>
             </div>
 
+            <!-- Hộp hiển thị phản hồi API -->
             <div class="response-box" id="responseBox" style="display: none;">
-                <h4>📤 API Response:</h4>
+                <h4>📤 Phản Hồi API:</h4>
                 <div class="response-content" id="responseContent"></div>
             </div>
         </div>
 
         <div class="pipeline-section">
-            <h2>📋 Complete Pipeline Stages</h2>
+            <!-- Tiêu đề phần pipeline -->
+            <h2>📋 Các Giai Đoạn Hoàn Chỉnh của Pipeline</h2>
             
+            <!-- Giai đoạn 1: Nguồn (GitHub) -->
             <div class="step">
                 <div class="step-number">1</div>
                 <div class="step-content">
-                    <h3>Source (GitHub)</h3>
-                    <p>Developer commits & pushes code to GitHub repository</p>
+                    <h3>Nguồn (GitHub)</h3>
+                    <p>Lập trình viên commit và push code lên kho GitHub</p>
                 </div>
             </div>
 
+            <!-- Giai đoạn 2: Biên Dịch (GitHub Actions) -->
             <div class="step">
                 <div class="step-number">2</div>
                 <div class="step-content">
-                    <h3>Build (GitHub Actions)</h3>
-                    <p>Automatically compile & install all dependencies from requirements.txt</p>
+                    <h3>Biên Dịch (GitHub Actions)</h3>
+                    <p>Tự động biên dịch & cài đặt tất cả các thư viện từ requirements.txt</p>
                 </div>
             </div>
 
+            <!-- Giai đoạn 3: Kiểm Tra (pytest) -->
             <div class="step">
                 <div class="step-number">3</div>
                 <div class="step-content">
-                    <h3>Test (pytest)</h3>
-                    <p>Execute 18 automated unit tests with code coverage analysis</p>
+                    <h3>Kiểm Tra (pytest)</h3>
+                    <p>Thực thi 18 bài kiểm tra đơn vị tự động với phân tích phạm vi code</p>
                 </div>
             </div>
 
+            <!-- Giai đoạn 4: Triển Khai (Render.com) -->
             <div class="step">
                 <div class="step-number">4</div>
                 <div class="step-content">
-                    <h3>Deploy (Render.com)</h3>
-                    <p>Auto-deploy to Staging or require manual approval for Production</p>
+                    <h3>Triển Khai (Render.com)</h3>
+                    <p>Tự động triển khai sang Staging hoặc yêu cầu phê duyệt thủ công cho Production</p>
                 </div>
             </div>
         </div>
 
         <div class="pipeline-section">
-            <h2>🌍 Two Deployment Environments</h2>
+            <!-- Phần môi trường triển khai -->
+            <h2>🌍 Hai Môi Trường Triển Khai</h2>
             
+            <!-- Môi trường Staging (Phát Triển) -->
             <div class="environment">
-                <h4>✓ Staging (Development)</h4>
-                <div class="env-item">• <strong>Auto-deploy</strong> on every push to main branch</div>
-                <div class="env-item">• <strong>Free tier</strong> on Render.com</div>
-                <div class="env-item">• Used for testing & validation</div>
+                <h4>✓ Staging (Phát Triển)</h4>
+                <div class="env-item">• <strong>Triển khai tự động</strong> trên mỗi push vào nhánh main</div>
+                <div class="env-item">• <strong>Tầng miễn phí</strong> trên Render.com</div>
+                <div class="env-item">• Được sử dụng để kiểm tra & xác nhận</div>
                 <div class="env-item">📍 URL: ci-cd-demo-staging.onrender.com</div>
             </div>
 
+            <!-- Môi trường Production (Trực Tiếp) -->
             <div class="environment">
-                <h4>⚠️ Production (Live)</h4>
-                <div class="env-item">• <strong>Manual approval required</strong> before deployment</div>
-                <div class="env-item">• <strong>Starter plan</strong> on Render.com (~$7/month)</div>
-                <div class="env-item">• Serves real users & production data</div>
+                <h4>⚠️ Production (Trực Tiếp)</h4>
+                <div class="env-item">• <strong>Yêu cầu phê duyệt thủ công</strong> trước khi triển khai</div>
+                <div class="env-item">• <strong>Gói Starter</strong> trên Render.com (~$7/tháng)</div>
+                <div class="env-item">• Phục vụ người dùng thực & dữ liệu sản xuất</div>
                 <div class="env-item">📍 URL: ci-cd-demo-production.onrender.com</div>
             </div>
         </div>
 
         <div class="pipeline-section">
-            <h2>✨ Key Features Implemented</h2>
+            <!-- Phần tính năng chính được triển khai -->
+            <h2>✨ Các Tính Năng Chính Được Triển Khai</h2>
             
             <div class="features">
+                <!-- Tính năng 1: Tự động hóa đầy đủ -->
                 <div class="feature-box">
-                    <h4>🔄 Full Automation</h4>
-                    <p>CI/CD triggered automatically on every GitHub push</p>
+                    <h4>🔄 Tự Động Hóa Đầy Đủ</h4>
+                    <p>CI/CD được kích hoạt tự động trên mỗi push GitHub</p>
                 </div>
+                <!-- Tính năng 2: 18 Bài Kiểm Tra Đơn Vị -->
                 <div class="feature-box">
-                    <h4>🧪 18 Unit Tests</h4>
-                    <p>Comprehensive pytest coverage with automated reporting</p>
+                    <h4>🧪 18 Bài Kiểm Tra Đơn Vị</h4>
+                    <p>Phạm vi pytest toàn diện với báo cáo tự động</p>
                 </div>
+                <!-- Tính năng 3: Cổng Phê Duyệt Thủ Công -->
                 <div class="feature-box">
-                    <h4>🛡️ Manual Approval Gate</h4>
-                    <p>Production requires human review before deployment</p>
+                    <h4>🛡️ Cổng Phê Duyệt Thủ Công</h4>
+                    <p>Production yêu cầu xem xét người dùng trước khi triển khai</p>
                 </div>
+                <!-- Tính năng 4: Giám Sát Sức Khoẻ -->
                 <div class="feature-box">
-                    <h4>📊 Health Monitoring</h4>
-                    <p>API endpoints for status & version checking</p>
+                    <h4>📊 Giám Sát Sức Khoẻ</h4>
+                    <p>Các điểm cuối API để kiểm tra trạng thái & phiên bản</p>
                 </div>
+                <!-- Tính năng 5: Triển Khai Đa Giai Đoạn -->
                 <div class="feature-box">
-                    <h4>🚀 Multi-Stage Deploy</h4>
-                    <p>Staging & Production environments separated</p>
+                    <h4>🚀 Triển Khai Đa Giai Đoạn</h4>
+                    <p>Môi trường Staging & Production được tách biệt</p>
                 </div>
+                <!-- Tính năng 6: Tài Liệu Đầy Đủ -->
                 <div class="feature-box">
-                    <h4>📝 Full Documentation</h4>
-                    <p>Complete setup & deployment guides included</p>
+                    <h4>📝 Tài Liệu Đầy Đủ</h4>
+                    <p>Bao gồm hướng dẫn thiết lập & triển khai hoàn chỉnh</p>
                 </div>
             </div>
         </div>
 
         <div class="pipeline-section">
-            <h2>🔧 Technology Stack</h2>
+            <!-- Phần công nghệ sử dụng -->
+            <h2>🔧 Stack Công Nghệ</h2>
             
             <div class="features">
+                <!-- Backend -->
                 <div class="feature-box">
                     <h4>Backend</h4>
                     <p><strong>Python 3.13.5</strong><br>Flask 3.0.0<br>Gunicorn 21.2.0</p>
                 </div>
+                <!-- Kiểm Tra -->
                 <div class="feature-box">
-                    <h4>Testing</h4>
-                    <p><strong>pytest 7.4.3</strong><br>pytest-cov 4.1.0<br>18 test cases</p>
+                    <h4>Kiểm Tra</h4>
+                    <p><strong>pytest 7.4.3</strong><br>pytest-cov 4.1.0<br>18 bài kiểm tra</p>
                 </div>
+                <!-- Pipeline CI/CD -->
                 <div class="feature-box">
-                    <h4>CI/CD Pipeline</h4>
-                    <p><strong>GitHub Actions</strong><br>Automated workflows<br>Build + Test + Deploy</p>
+                    <h4>Pipeline CI/CD</h4>
+                    <p><strong>GitHub Actions</strong><br>Quy trình tự động<br>Biên Dịch + Kiểm Tra + Triển Khai</p>
                 </div>
+                <!-- Triển Khai Cloud -->
                 <div class="feature-box">
-                    <h4>Cloud Deployment</h4>
-                    <p><strong>Render.com</strong><br>Staging (Free)<br>Production (Starter)</p>
+                    <h4>Triển Khai Cloud</h4>
+                    <p><strong>Render.com</strong><br>Staging (Miễn Phí)<br>Production (Gói Starter)</p>
                 </div>
             </div>
         </div>
 
         <div class="pipeline-section">
-            <h2>📋 API Endpoints</h2>
+            <!-- Phần danh sách các điểm cuối API -->
+            <h2>📋 Các Điểm Cuối API</h2>
             <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
-                <p style="margin: 10px 0;"><strong>GET /</strong> - Main dashboard page</p>
-                <p style="margin: 10px 0;"><strong>GET /health</strong> - Health check endpoint</p>
-                <p style="margin: 10px 0;"><strong>GET /api/version</strong> - Version information API</p>
+                <p style="margin: 10px 0;"><strong>GET /</strong> - Trang dashboard chính</p>
+                <p style="margin: 10px 0;"><strong>GET /health</strong> - Điểm cuối kiểm tra sức khoẻ</p>
+                <p style="margin: 10px 0;"><strong>GET /api/version</strong> - API thông tin phiên bản</p>
             </div>
         </div>
 
         <div style="text-align: center; margin-top: 30px;">
-            <div class="status-badge">✅ Pipeline Complete & Active</div>
+            <!-- Huy hiệu trạng thái hoàn thành -->
+            <div class="status-badge">✅ Pipeline Hoàn Thành & Hoạt Động</div>
             <p style="color: #999; margin-top: 15px; font-size: 0.9em;">
                 GitHub: github.com/TimeKP-sus/my-ci-cd-project
             </p>
             <p style="color: #999; font-size: 0.9em;">
-                Complete CI/CD implementation meeting all Topic 7 requirements
+                Triển khai CI/CD hoàn chỉnh đáp ứng tất cả các yêu cầu
             </p>
         </div>
     </div>
 
-    <!-- JavaScript for API Testing -->
+    <!-- JavaScript để Kiểm Tra API - JavaScript for API Testing -->
     <script>
+        /**
+         * Hàm hiển thị phản hồi từ API trên giao diện người dùng
+         * Function: Hiển thị kết quả kiểm tra API
+         * @param {string} message - Thông báo hoặc dữ liệu phản hồi
+         * @param {boolean} isError - Có phải lỗi không? (mặc định: false)
+         */
         function showResponse(message, isError = false) {
-            const box = document.getElementById('responseBox');
-            const content = document.getElementById('responseContent');
-            box.style.display = 'block';
+            const box = document.getElementById('responseBox');  // Lấy phần tử hộp phản hồi
+            const content = document.getElementById('responseContent');  // Lấy phần tử nội dung phản hồi
+            box.style.display = 'block';  // Hiển thị hộp phản hồi
+            // Thay đổi lớp CSS dựa trên kiểu (lỗi hoặc thành công)
             content.className = isError ? 'response-content error' : 'response-content success';
-            content.textContent = message;
+            content.textContent = message;  // Đặt nội dung phản hồi
         }
 
+        /**
+         * Hàm kiểm tra sức khoẻ của máy chủ backend
+         * Function: Gửi yêu cầu GET đến /health endpoint
+         * Hiển thị trạng thái sức khoẻ và môi trường hoạt động
+         */
         async function testHealth() {
-            showResponse('Loading...', false);
+            showResponse('Đang tải...', false);  // Hiển thị thông báo tải
             try {
+                // Gửi yêu cầu HTTP GET đến /health endpoint
                 const response = await fetch('/health');
+                // Kiểm tra nếu phản hồi HTTP không thành công (status code >= 400)
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                // Phân tích dữ liệu JSON từ phản hồi
                 const data = await response.json();
+                // Hiển thị dữ liệu với định dạng JSON đẹp (indentation 2 khoảng trắng)
                 showResponse(JSON.stringify(data, null, 2), false);
             } catch (error) {
-                showResponse(`❌ Error: ${error.message}\n\nMake sure the backend is running on this server.`, true);
+                // Hiển thị thông báo lỗi chi tiết khi có vấn đề
+                showResponse(`❌ Lỗi: ${error.message}\\n\\nĐảm bảo backend đang chạy trên máy chủ này.`, true);
             }
         }
 
+        /**
+         * Hàm lấy thông tin phiên bản từ máy chủ backend
+         * Function: Gửi yêu cầu GET đến /api/version endpoint
+         * Hiển thị thông tin phiên bản ứng dụng và môi trường
+         */
         async function testVersion() {
-            showResponse('Loading...', false);
+            showResponse('Đang tải...', false);  // Hiển thị thông báo tải
             try {
+                // Gửi yêu cầu HTTP GET đến /api/version endpoint
                 const response = await fetch('/api/version');
+                // Kiểm tra nếu phản hồi HTTP không thành công (status code >= 400)
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                // Phân tích dữ liệu JSON từ phản hồi
                 const data = await response.json();
+                // Hiển thị dữ liệu với định dạng JSON đẹp (indentation 2 khoảng trắng)
                 showResponse(JSON.stringify(data, null, 2), false);
             } catch (error) {
-                showResponse(`❌ Error: ${error.message}\n\nMake sure the backend is running on this server.`, true);
+                // Hiển thị thông báo lỗi chi tiết khi có vấn đề
+                showResponse(`❌ Lỗi: ${error.message}\\n\\nĐảm bảo backend đang chạy trên máy chủ này.`, true);
             }
         }
     </script>
